@@ -258,9 +258,22 @@ DialogFontsCollector::DialogFontsCollector(agi::Context *c)
 	collection_log->SetWrapMode(wxSTC_WRAP_WORD);
 	collection_log->SetMarginWidth(1, 0);
 	collection_log->SetReadOnly(true);
-	collection_log->StyleSetForeground(1, wxColour(0, 200, 0));
-	collection_log->StyleSetForeground(2, wxColour(200, 0, 0));
-	collection_log->StyleSetForeground(3, wxColour(200, 100, 0));
+
+	if (OPT_GET("App/Dark Mode")->GetBool()) {
+		collection_log->SetBackgroundColour(wxColour(24, 24, 24));
+		collection_log->SetForegroundColour(wxColour(230, 230, 230));
+		collection_log->StyleSetBackground(wxSTC_STYLE_DEFAULT, wxColour(24, 24, 24));
+		collection_log->StyleSetForeground(wxSTC_STYLE_DEFAULT, wxColour(230, 230, 230));
+		collection_log->StyleClearAll();
+		collection_log->SetCaretForeground(wxColour(230, 230, 230));
+		collection_log->SetSelBackground(true, wxColour(38, 79, 120));
+		collection_log->SetSelForeground(true, wxColour(255, 255, 255));
+		collection_log->SetMarginBackground(1, wxColour(24, 24, 24));
+	}
+
+	collection_log->StyleSetForeground(1, OPT_GET("App/Dark Mode")->GetBool() ? wxColour(104, 220, 104) : wxColour(0, 200, 0));
+	collection_log->StyleSetForeground(2, OPT_GET("App/Dark Mode")->GetBool() ? wxColour(255, 85, 85) : wxColour(200, 0, 0));
+	collection_log->StyleSetForeground(3, OPT_GET("App/Dark Mode")->GetBool() ? wxColour(255, 184, 108) : wxColour(200, 100, 0));
 	log_box->Add(collection_log, wxSizerFlags().Border());
 
 	wxStdDialogButtonSizer *button_sizer = CreateStdDialogButtonSizer(wxOK | wxCANCEL | wxHELP);
