@@ -17,7 +17,7 @@
 		"Save UI State" : true,
 		"Show Toolbar" : true,
 		"Toolbar Icon Size" : 16,
-		"Dark Mode" : false
+		"Dark Mode" : true
 	},
 
 
@@ -208,26 +208,26 @@
 			}
 		},
 		"Subtitle Grid" : {
-			"Active Border" : "rgb(255, 91, 239)",
+			"Active Border" : "rgb(110, 166, 255)",
 			"Background" : {
-				"Background" : "rgb(255,255,255)",
-				"Comment" : "rgb(216, 222, 245)",
-				"Inframe" : "rgb(255, 253, 234)",
-				"Selected Comment" : "rgb(211, 238, 238)",
-				"Selection" : "rgb(206, 255, 231)",
-				"Open Fold" : "rgb(235, 235, 235)",
-				"Closed Fold" : "rgb(200, 200, 200)"
+				"Background" : "rgb(24, 24, 24)",
+				"Comment" : "rgb(32, 36, 42)",
+				"Inframe" : "rgb(34, 43, 42)",
+				"Selected Comment" : "rgb(38, 49, 58)",
+				"Selection" : "rgb(38, 79, 120)",
+				"Open Fold" : "rgb(37, 37, 37)",
+				"Closed Fold" : "rgb(48, 48, 48)"
 			},
-			"Collision" : "rgb(255,0,0)",
-			"CPS Error" : "rgb(255,0,0)",
-			"Header" : "rgb(165, 207, 231)",
-			"Left Column" : "rgb(196, 236, 201)",
-			"Lines" : "rgb(190,190,190)",
-			"Selection" : "rgb(0,0,0)",
-			"Standard" : "rgb(0,0,0)"
+			"Collision" : "rgb(255, 85, 85)",
+			"CPS Error" : "rgb(255, 85, 85)",
+			"Header" : "rgb(37, 42, 50)",
+			"Left Column" : "rgb(32, 37, 43)",
+			"Lines" : "rgb(60, 60, 60)",
+			"Selection" : "rgb(255, 255, 255)",
+			"Standard" : "rgb(230, 230, 230)"
 		},
 		"Subtitle" : {
-			"Background" : "rgb(255, 255, 255)",
+			"Background" : "rgb(30, 30, 30)",
 			"Syntax" : {
 				"Background" : {
 					"Brackets" : "",
@@ -235,7 +235,7 @@
 					"Drawing Command" : "",
 					"Drawing X" : "",
 					"Drawing Y" : "",
-					"Error" : "rgb(255, 200, 200)",
+					"Error" : "rgb(58, 31, 31)",
 					"Karaoke Template" : "",
 					"Karaoke Variable" : "",
 					"Line Break" : "",
@@ -262,19 +262,19 @@
 				"Underline": {
 					"Drawing Endpoint": true
 				},
-				"Brackets" : "rgb(20, 50, 255)",
-				"Comment" : "rgb(0,0,0)",
-				"Drawing Command" : "rgb(0,0,0)",
-				"Drawing X" : "rgb(90,40,40)",
-				"Drawing Y" : "rgb(40,90,40)",
-				"Error" : "rgb(200, 0, 0)",
-				"Karaoke Template" : "rgb(128, 0, 192)",
-				"Karaoke Variable" : "rgb(128, 0, 192)",
-				"Line Break" : "rgb(160, 160, 160)",
-				"Normal" : "rgb(0,0,0)",
-				"Parameters" : "rgb(40, 90, 40)",
-				"Slashes" : "rgb(255, 0, 200)",
-				"Tags" : "rgb(90, 90, 90)"
+				"Brackets" : "rgb(110, 166, 255)",
+				"Comment" : "rgb(166, 200, 117)",
+				"Drawing Command" : "rgb(215, 186, 125)",
+				"Drawing X" : "rgb(255, 153, 153)",
+				"Drawing Y" : "rgb(153, 214, 153)",
+				"Error" : "rgb(255, 85, 85)",
+				"Karaoke Template" : "rgb(197, 134, 255)",
+				"Karaoke Variable" : "rgb(197, 134, 255)",
+				"Line Break" : "rgb(176, 176, 176)",
+				"Normal" : "rgb(230, 230, 230)",
+				"Parameters" : "rgb(139, 203, 139)",
+				"Slashes" : "rgb(255, 110, 199)",
+				"Tags" : "rgb(143, 170, 220)"
 			}
 		},
 		"Video Dummy" : {
