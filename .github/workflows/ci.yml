@@ -124,6 +124,7 @@ jobs:
         run: |
           choco install ninja innosetup pkgconfiglite
           "C:\ProgramData\chocolatey\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          if (!(Test-Path subprojects\freetype2.wrap)) { meson wrap install freetype2 }
           $url = "https://github.com/leafo/moonscript/releases/download/win32-v0.5.0/moonscript-187bac54ee5a7450013e9c38e005a0e671b76f45.zip"
           mkdir moonscript
           Invoke-WebRequest -Uri $url -OutFile ".\moonscript\moonscript.zip"
