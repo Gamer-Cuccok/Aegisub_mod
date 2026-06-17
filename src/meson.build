@@ -141,6 +141,7 @@ aegisub_src = files(
     'toggle_bitmap.cpp',
     'toolbar.cpp',
     'tooltip_manager.cpp',
+    'ui_dark_theme.cpp',
     'utils.cpp',
     'validators.cpp',
     'vector2d.cpp',
