@@ -26,6 +26,7 @@
 #include "options.h"
 #include "search_replace_engine.h"
 #include "utils.h"
+#include "ui_dark_theme.h"
 #include "validators.h"
 
 #include <libaegisub/make_unique.h>
@@ -114,6 +115,7 @@ DialogSearchReplace::DialogSearchReplace(agi::Context* c, bool replace)
 	main_sizer->Add(top_sizer);
 	main_sizer->Add(limit_sizer, wxSizerFlags().Border());
 	SetSizerAndFit(main_sizer);
+	dark_ui::Apply(this);
 	CenterOnParent();
 
 	TransferDataToWindow();

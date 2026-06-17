@@ -33,6 +33,7 @@
 #include "libresrc/libresrc.h"
 #include "project.h"
 #include "timeedit_ctrl.h"
+#include "ui_dark_theme.h"
 #include "validators.h"
 #include "video_controller.h"
 
@@ -92,6 +93,7 @@ DialogJumpTo::DialogJumpTo(agi::Context *c)
 	MainSizer->Add(TimesSizer, 0, wxALL | wxALIGN_CENTER, 5);
 	MainSizer->Add(ButtonSizer, 0, wxEXPAND | wxLEFT | wxBOTTOM | wxRIGHT, 5);
 	d.SetSizerAndFit(MainSizer);
+	dark_ui::Apply(&d);
 	d.CenterOnParent();
 
 	d.Bind(wxEVT_INIT_DIALOG, &DialogJumpTo::OnInitDialog, this);

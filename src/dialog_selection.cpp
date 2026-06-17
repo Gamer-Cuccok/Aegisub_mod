@@ -26,6 +26,7 @@
 #include "options.h"
 #include "search_replace_engine.h"
 #include "selection_controller.h"
+#include "ui_dark_theme.h"
 
 #include <boost/range/algorithm/set_algorithm.hpp>
 
@@ -153,6 +154,7 @@ wxDialog (c->parent, -1, _("Select"), wxDefaultPosition, wxDefaultSize, wxCAPTIO
 	main_sizer->Add(CreateButtonSizer(wxOK | wxCANCEL | wxAPPLY | wxHELP), main_flags);
 
 	SetSizerAndFit(main_sizer);
+	dark_ui::Apply(this);
 	CenterOnParent();
 
 	dialogue_field->SetSelection(OPT_GET("Tool/Select Lines/Field")->GetInt());

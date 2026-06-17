@@ -27,6 +27,7 @@
 #include "selection_controller.h"
 #include "subs_controller.h"
 #include "timeedit_ctrl.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/ass/time.h>
 #include <libaegisub/fs.h>
@@ -222,6 +223,7 @@ DialogShiftTimes::DialogShiftTimes(agi::Context *context)
 	main_sizer->Add(top_sizer, wxSizerFlags().Border(wxALL & ~wxBOTTOM));
 	main_sizer->Add(CreateButtonSizer(wxOK | wxCANCEL | wxHELP), wxSizerFlags().Right().Border());
 	SetSizerAndFit(main_sizer);
+	dark_ui::Apply(this);
 	CenterOnParent();
 
 	Bind(wxEVT_BUTTON, &DialogShiftTimes::Process, this, wxID_OK);

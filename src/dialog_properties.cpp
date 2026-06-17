@@ -36,6 +36,7 @@
 #include "project.h"
 #include "resolution_resampler.h"
 #include "validators.h"
+#include "ui_dark_theme.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <vector>
@@ -172,6 +173,7 @@ DialogProperties::DialogProperties(agi::Context *c)
 	MainSizer->Add(ButtonSizer,0,wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND,5);
 
 	d.SetSizerAndFit(MainSizer);
+	dark_ui::Apply(&d);
 	d.CenterOnParent();
 }
 

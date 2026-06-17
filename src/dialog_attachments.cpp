@@ -34,6 +34,7 @@
 #include "libresrc/libresrc.h"
 #include "options.h"
 #include "utils.h"
+#include "ui_dark_theme.h"
 
 #include <wx/button.h>
 #include <wx/dialog.h>
@@ -92,6 +93,7 @@ DialogAttachments::DialogAttachments(wxWindow *parent, AssFile *ass)
 	mainSizer->Add(listView, 1, wxTOP | wxLEFT | wxRIGHT | wxEXPAND, 5);
 	mainSizer->Add(buttonSizer, 0, wxALL | wxEXPAND, 5);
 	d.SetSizerAndFit(mainSizer);
+	dark_ui::Apply(&d);
 	d.CenterOnParent();
 
 	attachFont->Bind(wxEVT_BUTTON, &DialogAttachments::OnAttachFont, this);
