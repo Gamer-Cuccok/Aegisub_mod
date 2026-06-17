@@ -44,6 +44,7 @@
 #include "persist_location.h"
 #include "selection_controller.h"
 #include "subtitle_format.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/fs.h>
 #include <libaegisub/make_unique.h>
@@ -325,6 +326,7 @@ DialogStyleManager::DialogStyleManager(agi::Context *context)
 	MainSizer->Add(buttonSizer,0,wxBOTTOM | wxEXPAND,5);
 
 	SetSizerAndFit(MainSizer);
+	dark_ui::Apply(this);
 
 	// Position window
 	persist = agi::make_unique<PersistLocation>(this, "Tool/Style Manager");

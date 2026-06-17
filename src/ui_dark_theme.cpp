@@ -11,9 +11,13 @@
 #include <wx/combobox.h>
 #include <wx/dataview.h>
 #include <wx/listbox.h>
+#include <wx/listctrl.h>
+#include <wx/panel.h>
 #include <wx/notebook.h>
 #include <wx/radiobox.h>
 #include <wx/spinctrl.h>
+#include <wx/slider.h>
+#include <wx/statbox.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/window.h>
@@ -43,8 +47,15 @@ void apply_to_window(wxWindow *window) {
 		window->SetForegroundColour(text_fg);
 	}
 	else if (dynamic_cast<wxListBox *>(window) ||
+		dynamic_cast<wxListCtrl *>(window) ||
 		dynamic_cast<wxDataViewCtrl *>(window)) {
 		window->SetBackgroundColour(bg);
+		window->SetForegroundColour(text_fg);
+	}
+	else if (dynamic_cast<wxPanel *>(window) ||
+		dynamic_cast<wxStaticBox *>(window) ||
+		dynamic_cast<wxSlider *>(window)) {
+		window->SetBackgroundColour(panel_bg);
 		window->SetForegroundColour(text_fg);
 	}
 	else if (dynamic_cast<wxStaticText *>(window) ||

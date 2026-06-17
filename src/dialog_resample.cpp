@@ -22,6 +22,7 @@
 #include "libresrc/libresrc.h"
 #include "project.h"
 #include "resolution_resampler.h"
+#include "ui_dark_theme.h"
 #include "validators.h"
 
 #include <boost/range/size.hpp>
@@ -197,6 +198,7 @@ DialogResample::DialogResample(agi::Context *c, ResampleSettings &settings)
 	main_sizer->Add(margin_box, wxSizerFlags(1).Expand().Border());
 	main_sizer->Add(d.CreateStdDialogButtonSizer(wxOK | wxCANCEL | wxHELP), wxSizerFlags().Expand().Border(wxALL & ~wxTOP));
 	d.SetSizerAndFit(main_sizer);
+	dark_ui::Apply(&d);
 	d.CenterOnParent();
 
 	d.TransferDataToWindow();

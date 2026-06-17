@@ -20,6 +20,7 @@
 #include "help_button.h"
 #include "libresrc/libresrc.h"
 #include "options.h"
+#include "ui_dark_theme.h"
 #include "validators.h"
 #include "video_provider_dummy.h"
 
@@ -134,6 +135,7 @@ DialogDummyVideo::DialogDummyVideo(wxWindow *parent)
 	btn_sizer->GetAffirmativeButton()->Enable(UpdateLengthDisplay());
 
 	d.SetSizerAndFit(main_sizer);
+	dark_ui::Apply(&d);
 	d.CenterOnParent();
 
 	d.Bind(wxEVT_COMBOBOX, &DialogDummyVideo::OnResolutionShortcut, this);

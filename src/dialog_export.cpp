@@ -35,6 +35,7 @@
 #include "libresrc/libresrc.h"
 #include "subtitle_format.h"
 #include "utils.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/charset_conv.h>
 #include <libaegisub/split.h>
@@ -167,6 +168,7 @@ DialogExport::DialogExport(agi::Context *c)
 	main_sizer->Add(horz_sizer, wxSizerFlags(1).Expand());
 	main_sizer->Add(btn_sizer, wxSizerFlags().Expand().Border(wxALL & ~wxTOP));
 	d.SetSizerAndFit(main_sizer);
+	dark_ui::Apply(&d);
 	RefreshOptions();
 	d.CenterOnParent();
 }

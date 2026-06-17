@@ -29,6 +29,7 @@
 
 #include "options.h"
 #include "validators.h"
+#include "ui_dark_theme.h"
 
 #include <wx/checkbox.h>
 #include <wx/dialog.h>
@@ -61,6 +62,7 @@ bool ShowPlainTextImportDialog() {
 	main_sizer->Add(new wxCheckBox(&d, -1, _("Include blank lines"), wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&include_blank)), 0, wxLEFT|wxRIGHT|wxALIGN_RIGHT, 5);
 	main_sizer->Add(d.CreateSeparatedButtonSizer(wxOK|wxCANCEL), 0, wxALL|wxEXPAND, 5);
 	d.SetSizerAndFit(main_sizer);
+	dark_ui::Apply(&d);
 
 	d.Bind(wxEVT_BUTTON, [&](wxCommandEvent&) {
 		d.TransferDataFromWindow();

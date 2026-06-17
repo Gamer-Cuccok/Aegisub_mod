@@ -36,6 +36,7 @@
 #include "include/aegisub/context.h"
 #include "libresrc/libresrc.h"
 #include "options.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/karaoke_matcher.h>
 
@@ -541,6 +542,7 @@ DialogKanjiTimer::DialogKanjiTimer(agi::Context *c)
 	MainStackSizer->Add(buttonSizer, 0, wxEXPAND|wxALL, 6);
 
 	SetSizerAndFit(MainStackSizer);
+	dark_ui::Apply(this);
 	CenterOnParent();
 
 	Bind(wxEVT_KEY_DOWN, &DialogKanjiTimer::OnKeyDown, this);

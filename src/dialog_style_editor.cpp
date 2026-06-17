@@ -48,6 +48,7 @@
 #include "selection_controller.h"
 #include "subs_preview.h"
 #include "utils.h"
+#include "ui_dark_theme.h"
 #include "validators.h"
 
 #include <libaegisub/of_type_adaptor.h>
@@ -368,6 +369,7 @@ DialogStyleEditor::DialogStyleEditor(wxWindow *parent, AssStyle *style, agi::Con
 	MainSizer->Add(ButtonSizer, 0, wxBOTTOM | wxEXPAND, 5);
 
 	SetSizerAndFit(MainSizer);
+	dark_ui::Apply(this);
 
 	// Force the style name text field to scroll based on its final size, rather
 	// than its initial size

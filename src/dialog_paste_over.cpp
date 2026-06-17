@@ -29,6 +29,7 @@
 
 #include "help_button.h"
 #include "options.h"
+#include "ui_dark_theme.h"
 
 #include <functional>
 #include <wx/button.h>
@@ -105,6 +106,7 @@ DialogPasteOver::DialogPasteOver(wxWindow *parent)
 	MainSizer->Add(TopButtonSizer,0,wxLEFT | wxRIGHT | wxEXPAND,5);
 	MainSizer->Add(ButtonSizer,0,wxALL | wxEXPAND,5);
 	d.SetSizerAndFit(MainSizer);
+	dark_ui::Apply(&d);
 	d.CenterOnParent();
 }
 

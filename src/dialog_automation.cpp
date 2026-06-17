@@ -36,6 +36,7 @@
 #include "include/aegisub/context.h"
 #include "libresrc/libresrc.h"
 #include "options.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/signal.h>
 
@@ -155,6 +156,7 @@ DialogAutomation::DialogAutomation(agi::Context *c)
 	main_box->Add(list, wxSizerFlags(1).Expand().Border());
 	main_box->Add(button_box, wxSizerFlags().Expand().Border(wxALL & ~wxTOP));
 	SetSizerAndFit(main_box);
+	dark_ui::Apply(this);
 	Center();
 
 	// why doesn't this work... the button gets the "default" decoration but doesn't answer to Enter

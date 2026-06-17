@@ -39,6 +39,7 @@
 #include "project.h"
 #include "selection_controller.h"
 #include "utils.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/address_of_adaptor.h>
 #include <libaegisub/ass/time.h>
@@ -275,6 +276,7 @@ DialogTimingProcessor::DialogTimingProcessor(agi::Context *c)
 	auto MainSizer = new wxBoxSizer(wxVERTICAL);
 	MainSizer->Add(TopSizer,1,wxALL|wxEXPAND,5);
 	d.SetSizerAndFit(MainSizer);
+	dark_ui::Apply(&d);
 	d.CenterOnParent();
 
 	d.Bind(wxEVT_CHECKBOX, bind(&DialogTimingProcessor::UpdateControls, this));

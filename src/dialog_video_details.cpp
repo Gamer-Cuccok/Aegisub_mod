@@ -32,6 +32,7 @@
 #include "format.h"
 #include "include/aegisub/context.h"
 #include "project.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/ass/time.h>
 
@@ -70,6 +71,7 @@ void ShowVideoDetailsDialog(agi::Context *c) {
 	main_sizer->Add(video_sizer, 1, wxALL|wxEXPAND, 5);
 	main_sizer->Add(d.CreateSeparatedButtonSizer(wxOK), 0, wxALL|wxEXPAND, 5);
 	d.SetSizerAndFit(main_sizer);
+	dark_ui::Apply(&d);
 
 	d.CenterOnParent();
 	d.ShowModal();

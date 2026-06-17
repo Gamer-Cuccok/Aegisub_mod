@@ -31,6 +31,7 @@
 #include "dialog_manager.h"
 #include "format.h"
 #include "include/aegisub/context.h"
+#include "ui_dark_theme.h"
 
 #include <libaegisub/dispatch.h>
 #include <libaegisub/log.h>
@@ -106,6 +107,7 @@ LogWindow::LogWindow(agi::Context *c)
 	sizer->Add(text_ctrl, wxSizerFlags(1).Expand().Border());
 	sizer->Add(new wxButton(this, wxID_OK), wxSizerFlags(0).Border().Right());
 	SetSizerAndFit(sizer);
+	dark_ui::Apply(this);
 
 	agi::log::log->Subscribe(std::unique_ptr<agi::log::Emitter>(emit_log = new EmitLog(text_ctrl)));
 }
