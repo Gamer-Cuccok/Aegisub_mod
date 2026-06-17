@@ -23,7 +23,9 @@ jansson_dep = dependency('jansson', version: '>= 2.7', required: false)
 if jansson_dep.found()
     deps += jansson_dep
 else
-    jansson = cmake.subproject('jansson')
+    jansson_options = cmake.subproject_options()
+    jansson_options.add_cmake_defines({'CMAKE_POLICY_VERSION_MINIMUM': '3.5'})
+    jansson = cmake.subproject('jansson', options: jansson_options)
     deps += jansson.dependency('jansson')
 endif
 
