@@ -161,29 +161,29 @@ jobs:
             "build\subprojects\iconv\include\stdbool.h"
           )
 
-          $safeHeader = @"
-#ifndef _STDBOOL_H
-#define _STDBOOL_H
-#ifndef __cplusplus
-#ifndef true
-#define true 1
-#endif
-#ifndef false
-#define false 0
-#endif
-#endif
-#define __bool_true_false_are_defined 1
-#endif
-"@
+          $safeHeader = @(
+            "#ifndef _STDBOOL_H",
+            "#define _STDBOOL_H",
+            "#ifndef __cplusplus",
+            "#ifndef true",
+            "#define true 1",
+            "#endif",
+            "#ifndef false",
+            "#define false 0",
+            "#endif",
+            "#endif",
+            "#define __bool_true_false_are_defined 1",
+            "#endif",
+            ""
+          ) -join "`n"
 
           foreach ($h in $headers) {
             if (Test-Path $h) {
-              Set-Content $h $safeHeader -NoNewline
+              Set-Content -Path $h -Value $safeHeader -NoNewline
               Write-Host "Patched $h"
               Get-Content $h
             }
           }
-
       - name: Build
         run: meson compile -C build
       - name: Run test
