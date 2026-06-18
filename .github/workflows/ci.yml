@@ -157,7 +157,14 @@ jobs:
           $stdboolPath = "subprojects\iconv\include\stdbool.h"
           if (Test-Path $stdboolPath) {
             $stdboolText = Get-Content $stdboolPath -Raw
-            $stdboolText = $stdboolText -replace '(?m)^\s*typedef\s+int\s+bool\s*;\s*        run: meson test -C build --verbose "gtest main"
+            $stdboolText = $stdboolText -replace '(?m)^\s*typedef\s+int\s+bool\s*;\s*$', '/* patched out for modern MSVC: bool is already provided */'
+            $stdboolText = $stdboolText -replace '(?m)^\s*#\s*define\s+bool\s+int\s*$', '/* patched out for modern MSVC: bool is already provided */'
+            Set-Content $stdboolPath $stdboolText -NoNewline
+          }
+          meson compile -C build
+
+      - name: Run test
+        run: meson test -C build --verbose "gtest main"
 
       # Windows artifacts
       - name: Generate Windows installer
