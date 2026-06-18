@@ -152,18 +152,40 @@ jobs:
       - name: Configure
         run: meson setup build ${{ matrix.config.args }} -Dbuildtype=${{ matrix.config.buildtype }}
 
-      - name: Build
+      - name: Patch iconv stdbool for modern MSVC
+        if: matrix.config.os == 'windows-latest'
         shell: pwsh
         run: |
-          $stdboolPath = "subprojects\iconv\include\stdbool.h"
-          if (Test-Path $stdboolPath) {
-            $stdboolText = Get-Content $stdboolPath -Raw
-            $stdboolText = $stdboolText -replace '(?m)^\s*typedef\s+int\s+bool\s*;\s*$', '/* patched out for modern MSVC: bool is already provided */'
-            $stdboolText = $stdboolText -replace '(?m)^\s*#\s*define\s+bool\s+int\s*$', '/* patched out for modern MSVC: bool is already provided */'
-            Set-Content $stdboolPath $stdboolText -NoNewline
-          }
-          meson compile -C build
+          $headers = @(
+            "subprojects\iconv\include\stdbool.h",
+            "build\subprojects\iconv\include\stdbool.h"
+          )
 
+          $safeHeader = @"
+#ifndef _STDBOOL_H
+#define _STDBOOL_H
+#ifndef __cplusplus
+#ifndef true
+#define true 1
+#endif
+#ifndef false
+#define false 0
+#endif
+#endif
+#define __bool_true_false_are_defined 1
+#endif
+"@
+
+          foreach ($h in $headers) {
+            if (Test-Path $h) {
+              Set-Content $h $safeHeader -NoNewline
+              Write-Host "Patched $h"
+              Get-Content $h
+            }
+          }
+
+      - name: Build
+        run: meson compile -C build
       - name: Run test
         run: meson test -C build --verbose "gtest main"
 
