@@ -6,6 +6,7 @@ on:
       - master
       - feature
       - cibuilds
+      - shadow-dark-phase1
   pull_request:
     branches:
       - master
