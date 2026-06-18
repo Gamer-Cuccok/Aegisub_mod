@@ -187,6 +187,105 @@ jobs:
               Get-Content $h
             }
           }
+      - name: Patch FFMS2 for modern FFmpeg API
+        if: matrix.config.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          $files = @(
+            "subprojects\ffms2\src\core\videosource.cpp",
+            "build\subprojects\ffms2\src\core\videosource.cpp"
+          )
+
+          $frameBlock = @(
+            "    #ifdef AV_FRAME_FLAG_KEY",
+            "    LocalFrame.KeyFrame = !!(Frame->flags & AV_FRAME_FLAG_KEY);",
+            "    #else",
+            "    LocalFrame.KeyFrame = Frame->key_frame;",
+            "    #endif",
+            "    LocalFrame.PictType = av_get_picture_type_char(Frame->pict_type);",
+            "    LocalFrame.RepeatPict = Frame->repeat_pict;",
+            "    #ifdef AV_FRAME_FLAG_INTERLACED",
+            "    LocalFrame.InterlacedFrame = !!(Frame->flags & AV_FRAME_FLAG_INTERLACED);",
+            "    #else",
+            "    LocalFrame.InterlacedFrame = Frame->interlaced_frame;",
+            "    #endif",
+            "    #ifdef AV_FRAME_FLAG_TOP_FIELD_FIRST",
+            "    LocalFrame.TopFieldFirst = !!(Frame->flags & AV_FRAME_FLAG_TOP_FIELD_FIRST);",
+            "    #else",
+            "    LocalFrame.TopFieldFirst = Frame->top_field_first;",
+            "    #endif"
+          ) -join "`n"
+
+          $sideBlock = @(
+            "        // Set stereoscopic 3d type",
+            "        VP.Stereo3DType = FFMS_S3D_TYPE_2D;",
+            "        VP.Stereo3DFlags = 0;",
+            "",
+            "        const AVStereo3D *StereoSideData = reinterpret_cast<const AVStereo3D *>(av_stream_get_side_data(FormatContext->streams[VideoTrack], AV_PKT_DATA_STEREO3D, nullptr));",
+            "        if (StereoSideData) {",
+            "            VP.Stereo3DType = StereoSideData->type;",
+            "            VP.Stereo3DFlags = StereoSideData->flags;",
+            "        }",
+            "",
+            "        const AVMasteringDisplayMetadata *MasteringDisplay = reinterpret_cast<const AVMasteringDisplayMetadata *>(av_stream_get_side_data(FormatContext->streams[VideoTrack], AV_PKT_DATA_MASTERING_DISPLAY_METADATA, nullptr));",
+            "        if (MasteringDisplay) {",
+            "            if (MasteringDisplay->has_primaries) {",
+            "                VP.HasMasteringDisplayPrimaries = MasteringDisplay->has_primaries;",
+            "                for (int i = 0; i < 3; i++) {",
+            "                    VP.MasteringDisplayPrimariesX[i] = av_q2d(MasteringDisplay->display_primaries[i][0]);",
+            "                    VP.MasteringDisplayPrimariesY[i] = av_q2d(MasteringDisplay->display_primaries[i][1]);",
+            "                }",
+            "                VP.MasteringDisplayWhitePointX = av_q2d(MasteringDisplay->white_point[0]);",
+            "                VP.MasteringDisplayWhitePointY = av_q2d(MasteringDisplay->white_point[1]);",
+            "            }",
+            "            if (MasteringDisplay->has_luminance) {",
+            "                VP.HasMasteringDisplayLuminance = MasteringDisplay->has_luminance;",
+            "                VP.MasteringDisplayMinLuminance = av_q2d(MasteringDisplay->min_luminance);",
+            "                VP.MasteringDisplayMaxLuminance = av_q2d(MasteringDisplay->max_luminance);",
+            "            }",
+            "",
+            "            VP.HasMasteringDisplayPrimaries = !!VP.MasteringDisplayPrimariesX[0] && !!VP.MasteringDisplayPrimariesY[0] &&",
+            "                                          !!VP.MasteringDisplayPrimariesX[1] && !!VP.MasteringDisplayPrimariesY[1] &&",
+            "                                          !!VP.MasteringDisplayPrimariesX[2] && !!VP.MasteringDisplayPrimariesY[2] &&",
+            "                                          !!VP.MasteringDisplayWhitePointX   && !!VP.MasteringDisplayWhitePointY;",
+            "            VP.HasMasteringDisplayLuminance = !!VP.MasteringDisplayMaxLuminance;",
+            "        }",
+            "",
+            "        const AVContentLightMetadata *ContentLightLevel = reinterpret_cast<const AVContentLightMetadata *>(av_stream_get_side_data(FormatContext->streams[VideoTrack], AV_PKT_DATA_CONTENT_LIGHT_LEVEL, nullptr));",
+            "        if (ContentLightLevel) {",
+            "            VP.ContentLightLevelMax = ContentLightLevel->MaxCLL;",
+            "            VP.ContentLightLevelAverage = ContentLightLevel->MaxFALL;",
+            "            VP.HasContentLightLevel = !!VP.ContentLightLevelMax || !!VP.ContentLightLevelAverage;",
+            "        }",
+            "",
+            "        // Set rotation"
+          ) -join "`n"
+
+          foreach ($file in $files) {
+            if (!(Test-Path $file)) { continue }
+
+            $t = Get-Content $file -Raw
+            $before = $t
+
+            $t = [regex]::Replace(
+              $t,
+              "    LocalFrame\.KeyFrame = Frame->key_frame;\r?\n    LocalFrame\.PictType = av_get_picture_type_char\(Frame->pict_type\);\r?\n    LocalFrame\.RepeatPict = Frame->repeat_pict;\r?\n    LocalFrame\.InterlacedFrame = Frame->interlaced_frame;\r?\n    LocalFrame\.TopFieldFirst = Frame->top_field_first;",
+              $frameBlock
+            )
+
+            $t = [regex]::Replace(
+              $t,
+              "(?s)        // Set stereoscopic 3d type.*?        // Set rotation",
+              $sideBlock
+            )
+
+            if ($t -ne $before) {
+              Set-Content -Path $file -Value $t -NoNewline
+              Write-Host "Patched FFMS2 source: $file"
+            } else {
+              Write-Host "No FFMS2 patch needed or pattern not found: $file"
+            }
+          }
       - name: Build
         run: meson compile -C build
       - name: Run test
