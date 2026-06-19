@@ -6,7 +6,7 @@ opts = ['tests=disabled', 'libdav1d=enabled']
 
 deps += dependency('zlib')
 deps += dependency('libavformat', version: '>=58', default_options: opts)
-deps += dependency('libavcodec', version: '>=60', default_options: opts)
+deps += dependency('libavcodec', version: '>=58', default_options: opts)
 deps += dependency('libswscale', default_options: opts)
 deps += dependency('libavutil', default_options: opts)
 deps += dependency('libswresample', default_options: opts)
