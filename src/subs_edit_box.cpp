@@ -656,6 +656,10 @@ void SubsEditBox::UpdateCharacterCount(std::string const& text) {
 	size_t limit = (size_t)OPT_GET("Subtitle/Character Limit")->GetInt();
 	if (limit && length > limit)
 		char_count->SetBackgroundColour(to_wx(OPT_GET("Colour/Subtitle/Syntax/Background/Error")->GetColor()));
-	else
-		char_count->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
+	else if (OPT_GET("App/Dark Mode")->GetBool()) {
+        char_count->SetBackgroundColour(wxColour(32, 32, 32));
+        char_count->SetForegroundColour(wxColour(230, 230, 230));
+    }
+    else
+        char_count->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 }
