@@ -33,6 +33,7 @@
 
 #include "frame_main.h"
 
+#include "ui_dark_theme.h"
 #include "include/aegisub/context.h"
 #include "include/aegisub/menu.h"
 #include "include/aegisub/toolbar.h"
@@ -118,6 +119,21 @@ FrameMain::FrameMain()
 	StartupLog("Initializing context frames");
 	context->parent = this;
 	context->frame = this;
+
+    if (dark_ui::Enabled()) {
+        Bind(wxEVT_SHOW, [this](wxShowEvent &event) {
+            event.Skip();
+
+            if (!event.IsShown())
+                return;
+
+            CallAfter([this] {
+                dark_ui::Apply(this);
+                Refresh();
+                Update();
+            });
+        });
+    }
 
 	StartupLog("Apply saved Maximized state");
 	if (OPT_GET("App/Maximized")->GetBool()) Maximize(true);
